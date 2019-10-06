@@ -56,6 +56,8 @@ public class AuctionService {
                 .collect(Collectors.toList());
     }
 
+
+
     public List<Auction> findAllSorted(String sort) {
         Comparator<Auction> comparator = Comparator.comparing(Auction::getTitle);
         if(sort.equals("title")) {

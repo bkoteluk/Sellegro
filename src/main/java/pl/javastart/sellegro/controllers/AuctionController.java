@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import pl.javastart.sellegro.auction.AuctionService;
 import pl.javastart.sellegro.entity.Auction;
 import pl.javastart.sellegro.auction.AuctionFilters;
-import pl.javastart.sellegro.repository.AuctionRepository;
 
 import java.util.List;
 
@@ -16,13 +15,14 @@ public class AuctionController {
 
     private AuctionService auctionService;
 
+
     public AuctionController(AuctionService auctionService) {
         this.auctionService = auctionService;
+
     }
 
     @GetMapping("/auctions")
-    public String auctions(Model model,
-                           @RequestParam(required = false) String sort,
+    public String auctions(Model model, @RequestParam(required = false) String sort,
                            AuctionFilters auctionFilters) {
         List<Auction> auctions;
         if(sort != null) {
@@ -30,9 +30,11 @@ public class AuctionController {
         } else {
             auctions = auctionService.findAllForFilters(auctionFilters);
         }
-
+//        model.addAttribute("cars", auctionService.findAllForFilters(auctionFilters));
         model.addAttribute("cars", auctions);
         model.addAttribute("filters", auctionFilters);
         return "auctions";
     }
+
+
 }

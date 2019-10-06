@@ -1,5 +1,7 @@
 package pl.javastart.sellegro.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -21,6 +23,12 @@ public interface AuctionRepository extends JpaRepository<Auction, Long> {
 
     @Query("SELECT a FROM Auction a ORDER BY a.price asc ")
     List<Auction> findAllSorted(String sort);
+
+    @Query("SELECT a FROM Auction a ORDER BY a.price asc ")
+    Page<Auction> findAllSorted(String sort, Pageable pageable);
+
+    @Query("SELECT a FROM Auction a ")
+    Page<Auction> findAll(String sort, Pageable pageable);
 
     @Transactional
     @Modifying
