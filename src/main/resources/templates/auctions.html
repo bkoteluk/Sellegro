@@ -24,6 +24,11 @@
                 </a>
             </th>
             <th>
+                <a href="/auctions?sort=carMake">
+                    Producent
+                </a>
+            </th>
+            <th>
                 <a href="/auctions?sort=price">
                     Cena
                 </a>
@@ -43,6 +48,7 @@
         <tbody>
         <tr th:each="car: ${cars}">
             <td th:text="${car.title}"></td>
+            <td th:text="${car.carMake}"></td>
             <td th:text="|${car.price} zł|"></td>
             <td th:text="${car.color}"></td>
             <td th:text="|${car.endDate}|"></td>
