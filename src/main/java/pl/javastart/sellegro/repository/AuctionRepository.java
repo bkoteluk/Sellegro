@@ -21,8 +21,13 @@ public interface AuctionRepository extends JpaRepository<Auction, Long> {
     @Query("SELECT a FROM Auction a ORDER BY a.price asc ")
     List<Auction> find4MostExpensive();
 
-    @Query("SELECT a FROM Auction a ORDER BY a.price asc ")
-    List<Auction> findAllSorted(String sort);
+    @Query(value="SELECT * FROM AUCTIONS  ORDER BY :sort", nativeQuery = true)
+    List<Auction> findAllSorted(@Param("sort") String sort);
+
+    @Query("SELECT a FROM Auction a ORDER BY a.title ")
+    List<Auction> findAllForFilters(@Param("s") String sort);
+
+
 
     @Query("SELECT a FROM Auction a ORDER BY a.price asc ")
     Page<Auction> findAllSorted(String sort, Pageable pageable);

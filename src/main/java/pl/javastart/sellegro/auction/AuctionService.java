@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import pl.javastart.sellegro.entity.Auction;
 import pl.javastart.sellegro.repository.AuctionRepository;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
@@ -28,16 +29,14 @@ public class AuctionService {
 
 
     public void getData() {
-        List<Auction> auctionList = auctionRepository.findAll();
+        auctions = auctionRepository.findAll();
         Random random = new Random();
-        for (int i = 0; i < auctionList.size(); i++) {
+        for (int i = 0; i < auctions.size(); i++) {
             String randomAdjective = ADJECTIVES[random.nextInt(ADJECTIVES.length)];
-            Long id = auctionList.get(i).getId();
-            String title = randomAdjective + " " + auctionList.get(i).getCarMake() + " " + auctionList.get(i).getCarModel();
-            auctionList.get(i).setTitle(title);
-            auctionRepository.updateAuctionsTitles(title, id);
+            String title = randomAdjective + " " + auctions.get(i).getCarMake() + " " + auctions.get(i).getCarModel();
+            auctions.get(i).setTitle(title);
         }
-        auctions = auctionList;
+        auctionRepository.saveAll(auctions);
     }
 
     public List<Auction> find4MostExpensive() {
@@ -47,8 +46,8 @@ public class AuctionService {
                 .collect(Collectors.toList());
     }
 
-    public List<Auction> findAllForFilters(AuctionFilters auctionFilters) {
-        return auctions.stream()
+    public static List<Auction> findAllForFilters(AuctionFilters auctionFilters, List<Auction> auctionList) {
+        return auctionList.stream()
                 .filter(auction -> auctionFilters.getTitle() == null || auction.getTitle().toUpperCase().contains(auctionFilters.getTitle().toUpperCase()))
                 .filter(auction -> auctionFilters.getCarMaker() == null || auction.getCarMake().toUpperCase().contains(auctionFilters.getCarMaker().toUpperCase()))
                 .filter(auction -> auctionFilters.getCarModel() == null || auction.getCarModel().toUpperCase().contains(auctionFilters.getCarModel().toUpperCase()))

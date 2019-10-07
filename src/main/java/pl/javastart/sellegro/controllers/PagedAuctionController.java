@@ -1,5 +1,6 @@
 package pl.javastart.sellegro.controllers;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
@@ -7,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.javastart.sellegro.auction.AuctionFilters;
+import pl.javastart.sellegro.entity.Auction;
 import pl.javastart.sellegro.repository.AuctionRepository;
 
 @Controller
@@ -21,11 +23,11 @@ public class PagedAuctionController {
 
         @GetMapping("/pages")
         public String pagesAuctions(Model model, @RequestParam(defaultValue = "0") int page,
-                                    @RequestParam(required = false) String sort,
+                                    @RequestParam(required = false, defaultValue = "title") String sort,
                                     AuctionFilters auctionFilters) {
-
-            model.addAttribute("cars", auctionRepository.findAll("title", PageRequest.of(page, 50, Sort.by("title").descending())));
-
+            Page<Auction> auctionsPage = auctionRepository.findAll(sort, PageRequest.of(page, 50, Sort.by(sort).ascending()));
+            model.addAttribute("cars", auctionsPage);
+            model.addAttribute("currentPage", page);
             model.addAttribute("filters", auctionFilters);
             return "pageauctions";
         }

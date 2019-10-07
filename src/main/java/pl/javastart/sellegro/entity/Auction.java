@@ -11,6 +11,7 @@ public class Auction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "title")
     private String title;
     @Column(name = "carmake")
     private String carMake;
@@ -25,7 +26,6 @@ public class Auction {
     }
 
     public Auction(String title, String carMake, String carModel, String color, BigDecimal price, LocalDate endDate) {
-//        this.id = id;
         this.title = title;
         this.carMake = carMake;
         this.carModel = carModel;

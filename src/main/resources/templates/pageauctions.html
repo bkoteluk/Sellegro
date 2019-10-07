@@ -7,7 +7,7 @@
 <div class="content">
     <h1 style="text-align: center" class="mt-4">WSZYSTKIE AUKCJE</h1>
 
-    <form action="/auctions" method="get" th:object="${filters}">
+    <form action="/pages" method="get" th:object="${filters}">
         <input type="text" placeholder="Tytuł aukcji" th:field="*{title}">
         <input type="text" placeholder="Producent" th:field="*{carMaker}">
         <input type="text" placeholder="Marka" th:field="*{carModel}">
@@ -19,27 +19,27 @@
         <thead>
         <tr>
             <th>
-                <a href="/auctions?sort=title">
+                <a href="/pages?sort=title">
                     Tytuł
                 </a>
             </th>
             <th>
-                <a href="/auctions?sort=carMake">
+                <a href="/pages?sort=carMake">
                     Producent
                 </a>
             </th>
             <th>
-                <a href="/auctions?sort=price">
+                <a href="/pages?sort=price">
                     Cena
                 </a>
             </th>
             <th>
-                <a href="/auctions?sort=color">
+                <a href="/pages?sort=color">
                     Kolor
                 </a>
             </th>
             <th>
-                <a href="/auctions?sort=endDate">
+                <a href="/pages?sort=endDate">
                     Do kiedy
                 </a>
             </th>
@@ -57,7 +57,8 @@
     </table>
     <ul class = "nav nav-pills">
         <li class = "nav-item" th:each=" number: ${#numbers.sequence(0, cars.getTotalPages())}">
-            <a th:href="@{'/pages'(page=${number})}" th:text="${number}" class="nav-link"></a>
+            <a th:href="@{'/pages'(page=${number})}" th:text="${number}" class="nav-link" ></a>
+
         </li>
     </ul>
 
